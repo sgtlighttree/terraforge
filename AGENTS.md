@@ -1,5 +1,22 @@
 # AGENTS.md -- RealmGenesis 3D
 
+## Architecture Overview
+
+Before making significant changes, read [ARCHITECTURE.md](./ARCHITECTURE.md) for a complete overview of the codebase — the generation pipeline, data model, rendering architecture, state management, and key invariants. It is designed so an LLM (or a new contributor) can navigate the codebase confidently without reading every file.
+
+Key entry points:
+
+- **All app state**: `App.tsx` — 15 `useState` variables, prop-drilled to all children
+- **Data types**: `types.ts` — `Cell`, `WorldData`, `WorldParams`, `BiomeType`
+- **Generation logic**: `utils/worldGen.ts` — `generateWorld()` (12-stage async pipeline, line 491)
+- **Color mapping**: `utils/colors.ts` — `getCellColor(cell, viewMode, seaLevel)`
+- **3D rendering**: `components/WorldViewer.tsx`
+- **2D rendering**: `components/Map2D.tsx`
+- **AI lore**: `services/gemini.ts` — `generateWorldLore()` mutates `world.civData` in-place
+- **Save/export**: `utils/export.ts` — `exportMap()`, `saveMapToBrowser()`, `saveMapConfig()`
+
+---
+
 ## Commands
 
 ```bash
